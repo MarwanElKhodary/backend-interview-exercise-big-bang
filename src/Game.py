@@ -5,6 +5,7 @@ from typing import Dict, List, Optional
 from Scoreboard import Scoreboard
 from Schema import Schema
 from Rule import Rule
+from utils import clear_screen
 
 # Define the game schema configuration
 schema_config: Dict[str, List[Dict[str, str]]] = {
@@ -115,11 +116,13 @@ class Game(cmd.Cmd):
         This method runs the main game loop, getting player choices,
         determining the outcome, and updating the scoreboard.
         """
+        clear_screen()
 
         while True:
             player_choice: str = self._get_player_choice()
         
             if player_choice == 'quit':
+                clear_screen()
                 print("\nType 'start' to play the game or 'help' to list the commands.\n")
                 return
             
@@ -139,6 +142,7 @@ class Game(cmd.Cmd):
         Args:
             player_choice: The player's choice
         """
+        clear_screen()
         self._show_countdown()
 
         computer_choice: str = random.choice(self.valid_choices)
@@ -149,6 +153,7 @@ class Game(cmd.Cmd):
         print(f"\n{self.scoreboard.display_scores()}")
         print("\nPress Enter to continue...")
         input()
+        clear_screen()
     
     def _determine_winner(self, player_choice: str, computer_choice: str) -> None:
         """
@@ -231,6 +236,7 @@ class Game(cmd.Cmd):
                 if 0 <= choice_index < len(self.valid_choices):
                     return self.valid_choices[choice_index]
                 else:
+                    clear_screen()
                     print(f"\nInvalid number!")
                     return self._get_player_choice()  # Recursive call to try again
             except ValueError:
@@ -238,5 +244,6 @@ class Game(cmd.Cmd):
                 if player_choice in self.valid_choices:
                     return player_choice
                 else:
+                    clear_screen()
                     print(f"\nInvalid choice!")
                     return self._get_player_choice()  # Recursive call to try again
