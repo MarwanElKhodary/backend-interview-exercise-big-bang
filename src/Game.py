@@ -60,3 +60,38 @@ class Game(cmd.Cmd):
         self.rules: Dict[str, Rule] = self.schema.rules
         self.valid_choices: List[str] = self.schema.rule_names
         self.scoreboard: Scoreboard = Scoreboard(['player', 'computer'])
+        
+#**************************CMD COMMANDS***********************************
+    def do_score(self, arg: Optional[str] = None) -> None:
+        """
+        Display the current score.
+        
+        Shows the current scores for all players and the number of ties.
+        """
+        print(self.scoreboard.display_scores())
+    
+    def do_rules(self, arg: Optional[str] = None) -> None:
+        """
+        Display the game rules.
+        
+        Shows all the rules of the game, including what each choice beats.
+        """
+        print("Rules:")
+        for rule in self.rules.values():
+            print(f"- {rule}")
+    
+    def do_reset(self, arg: Optional[str] = None) -> None:
+        """
+        Reset the scoreboard.
+        
+        Resets all scores to zero.
+        """
+        self.scoreboard.reset()
+        print("Scores have been reset.")
+    
+    def do_quit(self, arg: Optional[str] = None) -> bool:
+        """
+        Stop playing the game, clear the leaderboard, and exit.
+        """
+        print('Thanks for playing!')
+        return True
